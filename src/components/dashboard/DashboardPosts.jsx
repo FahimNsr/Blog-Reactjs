@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getDashPosts } from "../../actions/dashboard";
+import { getDashPosts, handleDelete } from "../../actions/dashboard";
 
 const DashboardPosts = () => {
     const posts = useSelector((state) => state.dashPosts);
@@ -13,7 +13,7 @@ const DashboardPosts = () => {
     useEffect(() => {
         dispatch(getDashPosts());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [posts]);
 
     return (
         <div className="row">
@@ -91,12 +91,20 @@ const DashboardPosts = () => {
                                                 >
                                                     <i className="fa fa-pencil"></i>
                                                 </Link>
-                                                <Link
-                                                    to={`/dashboard/del-post/${post._id}`}
+                                                <button
                                                     className="btn btn-danger btn-sm"
+                                                    onClick={() =>
+                                                        dispatch(
+                                                            handleDelete(
+                                                                post._id
+                                                            )
+                                                        ) && (
+                                                            <Redirect to="/dashboard" />
+                                                        )
+                                                    }
                                                 >
                                                     <i className="fa fa-trash-o "></i>
-                                                </Link>
+                                                </button>
                                             </td>
                                             <td>
                                                 {`${post.createdAt.substr(

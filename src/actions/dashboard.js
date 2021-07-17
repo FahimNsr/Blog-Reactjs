@@ -5,6 +5,7 @@ import {
     newPost,
     editPost,
     updatePost,
+    delPost,
 } from "../services/dashboardService";
 
 export const getDashPosts = () => {
@@ -34,29 +35,31 @@ export const getEditPost = (postId) => {
 export const updatePostProcess = (postId, updatedPost) => {
     return async (dispatch, getState) => {
         const posts = [...getState().dashPosts];
-        const updatedPosts = [...posts];
-        const postIndex = updatedPosts.findIndex(
-            // eslint-disable-next-line eqeqeq
-            (post) => post._id == postId
-        );
-
-        let post = updatedPosts[postIndex];
-
-        post = { ...Object.fromEntries(updatedPost) };
-        updatedPosts[postIndex] = post;
+        const filteredPosts = posts.filter((post) => (post._id = postId));
 
         try {
+            const { data, status } = await updatePost(postId, updatedPost);
             await dispatch({
                 type: "UPDATE_POST",
-                payload: [...updatedPosts],
+                payload: [...filteredPosts, data.post],
             });
-            const { data, status } = await updatePost(postId, updatedPost);
-            console.log(data);
+
             if (status === 200) {
-                toast.success("Post edited");
+                toast.success("Post edited successfully");
             }
         } catch (ex) {
-            await dispatch({ type: "UPDATE_COURSE", payload: [...dashPosts] });
+            await dispatch({ type: "UPDATE_COURSE", payload: [...posts] });
         }
+    };
+};
+
+export const handleDelete = (postId) => {
+    return async (dispatch, getState) => {
+        const posts = [...getState().dashPosts];
+        const filteredPosts = posts.filter((post) => (post._id = postId));
+
+        await dispatch({ type: "DEL_POST", payload: [...filteredPosts] });
+        const { status } = await delPost(postId);
+        if (status === 200) toast.success("Post deleted successfully");
     };
 };
