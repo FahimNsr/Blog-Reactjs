@@ -7,6 +7,7 @@ import { singlePostReducer } from "./singlePost";
 import { userReducer } from "./user";
 
 import { dashPostsReducer } from "./dashboard";
+import { editPostReducer } from "./editPost";
 
 export const reducers = combineReducers({
     home: homeReducer,
@@ -14,5 +15,6 @@ export const reducers = combineReducers({
     singlePost: singlePostReducer,
     user: userReducer,
     loadingBar: loadingBarReducer,
-    dashPosts: dashPostsReducer
+    dashPosts: dashPostsReducer,
+    editPost: editPostReducer,
 });

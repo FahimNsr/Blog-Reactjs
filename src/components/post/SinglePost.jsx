@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getSinglePost } from "../../actions/singlePost";
 
-
 const SinglePost = ({ match }) => {
     const post = useSelector((state) => state.singlePost);
     const dispatch = useDispatch();

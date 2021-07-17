@@ -4,8 +4,6 @@ export const dashPostsReducer = (state = [], action) => {
             return [...action.payload];
         case "NEW_POST":
             return [...action.payload];
-        case "EDIT_POST":
-            return [...action.payload];
         case "UPDATE_POST":
             return [...action.payload];
         case "DEL_POST":

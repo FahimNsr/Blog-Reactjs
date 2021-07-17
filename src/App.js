@@ -24,8 +24,7 @@ import DashboardLayout from "./components/layouts/DashboardLayout";
 import Dashboard from "./components/dashboard/Dashboard";
 import DashboardPosts from "./components/dashboard/DashboardPosts";
 import AddPost from "./components/dashboard/AddPost";
-// import EditPost from "./components/dashboard/EditPost";
-
+import EditPost from "./components/dashboard/EditPost";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -61,9 +60,21 @@ const App = () => {
                                 )
                             }
                         />
-                        <Route path="/dashboard/posts" exact component={DashboardPosts} />
-                        <Route path="/dashboard/add-post" exact component={AddPost} />
-                        {/* <Route path="/dashboard/edit-post/:id" exact component={EditPost()} /> */}
+                        <Route
+                            path="/dashboard/posts"
+                            exact
+                            component={DashboardPosts}
+                        />
+                        <Route
+                            path="/dashboard/add-post"
+                            exact
+                            component={AddPost}
+                        />
+                        <Route
+                            path="/dashboard/edit-post/:id"
+                            exact
+                            component={EditPost}
+                        />
                     </DashboardLayout>
                 </Route>
                 <Route path={["/"]}>

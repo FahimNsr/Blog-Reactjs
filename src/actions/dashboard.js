@@ -1,6 +1,11 @@
 import { toast } from "react-toastify";
 
-import { dashPosts, newPost , updatePost } from "../services/dashboardService";
+import {
+    dashPosts,
+    newPost,
+    editPost,
+    updatePost,
+} from "../services/dashboardService";
 
 export const getDashPosts = () => {
     return async (dispatch) => {
@@ -17,14 +22,14 @@ export const addPost = (post) => {
             type: "NEW_POST",
             payload: [...getState().dashPosts, data.post],
         });
-    }
-}
-// export const getEditPost = (postId) => {
-//     return async (dispatch) => {
-//         const { data } = await editPost(postId);
-//         await dispatch({ type: "EDIT_POST", payload: data.post });
-//     };
-// };
+    };
+};
+export const getEditPost = (postId) => {
+    return async (dispatch) => {
+        const { data } = await editPost(postId);
+        await dispatch({ type: "EDIT_POST", payload: data.post });
+    };
+};
 
 export const updatePostProcess = (postId, updatedPost) => {
     return async (dispatch, getState) => {
@@ -45,16 +50,13 @@ export const updatePostProcess = (postId, updatedPost) => {
                 type: "UPDATE_POST",
                 payload: [...updatedPosts],
             });
-            const { data, status } = await updatePost(
-                postId,
-                updatedPost
-            );
+            const { data, status } = await updatePost(postId, updatedPost);
             console.log(data);
             if (status === 200) {
                 toast.success("Post edited");
             }
         } catch (ex) {
-            await dispatch({ type: "UPDATE_COURSE", payload: [...posts] });
+            await dispatch({ type: "UPDATE_COURSE", payload: [...dashPosts] });
         }
     };
 };

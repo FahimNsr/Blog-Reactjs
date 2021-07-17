@@ -54,7 +54,10 @@ const DashboardPosts = () => {
                                 </thead>
                                 <tbody>
                                     {posts.map((post) => (
-                                        <tr key={post._id} className="text-center">
+                                        <tr
+                                            key={post._id}
+                                            className="text-center"
+                                        >
                                             <td className="center">
                                                 <img
                                                     src={`http://localhost:4000/uploads/thumbnails/${post.thumbnail}`}
@@ -64,12 +67,18 @@ const DashboardPosts = () => {
                                                 />
                                             </td>
                                             <td>
-                                                <a href="/dashboard/ post.id ">
+                                                <a href={`/post/${post._id}`}>
                                                     {post.title}
                                                 </a>
                                             </td>
                                             <td>
-                                                <span className={ post.status === "public" ? "badge badge-success " : "badge badge-warning"}>
+                                                <span
+                                                    className={
+                                                        post.status === "public"
+                                                            ? "badge badge-success "
+                                                            : "badge badge-warning"
+                                                    }
+                                                >
                                                     {post.status}
                                                 </span>
                                             </td>
@@ -90,7 +99,13 @@ const DashboardPosts = () => {
                                                 </Link>
                                             </td>
                                             <td>
-                                                {`${post.createdAt.substr(0,10)} ${post.createdAt.substr(11,8)}`}
+                                                {`${post.createdAt.substr(
+                                                    0,
+                                                    10
+                                                )} ${post.createdAt.substr(
+                                                    11,
+                                                    8
+                                                )}`}
                                             </td>
                                         </tr>
                                     ))}

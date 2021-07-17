@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 
 import { Helmet } from "react-helmet";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { updatePostProcess } from "../../actions/dashboard";
+import { getEditPost, updatePostProcess } from "../../actions/dashboard";
 
-const EditPost = ({ post }) => {
+const EditPost = ({ match, history }) => {
+    const post = useSelector((state) => state.editPost);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getEditPost(match.params.id));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const [postId, setPostId] = useState();
     const [title, setTitle] = useState();
@@ -41,6 +47,7 @@ const EditPost = ({ post }) => {
         data.append("body", body);
 
         dispatch(updatePostProcess(postId, data));
+        history.push("/dashboard/posts");
     };
 
     return (
