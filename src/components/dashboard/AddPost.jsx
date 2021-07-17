@@ -1,35 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
+import SimpleReactValidator from "simple-react-validator";
+import { toast } from "react-toastify";
 
 import { addPost } from "../../actions/dashboard";
 
-// import { getDashPosts } from "../../actions/dashboard";
-
-const AddPost = ({history}) => {
+const AddPost = ({ history }) => {
     const [title, setTitle] = useState();
     const [status, setStatus] = useState();
     const [body, setBody] = useState();
+    const [thumbnail, setThumbnail] = useState();
 
     const dispatch = useDispatch();
+
+    const [, forceUpdate] = useState();
+
+    const validator = useRef(new SimpleReactValidator());
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         try {
-            let data = new FormData();
-            data.append("title", title);
-            data.append("status", status);
-            data.append("thumbnail", event.target.thumbnail.files[0]);
-            data.append("body", body);
+            if (validator.current.allValid()) {
+                let data = new FormData();
+                data.append("title", title);
+                data.append("status", status);
+                data.append("thumbnail", event.target.thumbnail.files[0]);
+                data.append("body", body);
 
-            dispatch(addPost(data));
-            // dispatch(getDashPosts());
-            history.push("/dashboard");
-            // console.log(data);
+                dispatch(addPost(data));
+
+                history.push("/dashboard");
+            } else {
+                validator.current.showMessages();
+                forceUpdate(1);
+            }
         } catch (ex) {
-            console.log(ex);
+            toast.error("Something went wrong");
+            console.log(ex)
         }
     };
     return (
@@ -60,8 +70,20 @@ const AddPost = ({history}) => {
                                     aria-describedby="title"
                                     placeholder="Title"
                                     value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => {
+                                        setTitle(e.target.value);
+                                        validator.current.showMessageFor(
+                                            "title"
+                                        );
+                                    }}
                                 />
+                                <p className="text-danger mb-4">
+                                    {validator.current.message(
+                                        "title",
+                                        title,
+                                        "required|between:8,64"
+                                    )}
+                                </p>
                             </div>
                             <div className="col-4">
                                 <label
@@ -74,12 +96,24 @@ const AddPost = ({history}) => {
                                     name="status"
                                     className="form-control"
                                     value={status}
-                                    onChange={(e) => setStatus(e.target.value)}
+                                    onChange={(e) => {
+                                        setStatus(e.target.value);
+                                        validator.current.showMessageFor(
+                                            "status"
+                                        );
+                                    }}
                                 >
                                     <option value=""></option>
                                     <option value="private">Private</option>
                                     <option value="public">Public</option>
                                 </select>
+                                <p className="text-danger mb-4">
+                                    {validator.current.message(
+                                        "status",
+                                        status,
+                                        "required|in:public,private"
+                                    )}
+                                </p>
                             </div>
                         </div>
                         <div className="form-group row ">
@@ -96,10 +130,20 @@ const AddPost = ({history}) => {
                                         name="body"
                                         placeholder="description"
                                         value={body}
-                                        onChange={(e) =>
-                                            setBody(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            setBody(e.target.value);
+                                            validator.current.showMessageFor(
+                                                "body"
+                                            );
+                                        }}
                                     />
+                                    <p className="text-danger mb-4">
+                                        {validator.current.message(
+                                            "body",
+                                            body,
+                                            "required"
+                                        )}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +161,20 @@ const AddPost = ({history}) => {
                                     name="thumbnail"
                                     id="thumbnail"
                                     aria-describedby="thumbnail"
+                                    onChange={(e) => {
+                                        setThumbnail(true);
+                                        validator.current.showMessageFor(
+                                            "thumbnail"
+                                        );
+                                    }}
                                 />
+                                <p className="text-danger mb-4">
+                                    {validator.current.message(
+                                        "thumbnail",
+                                        thumbnail,
+                                        "required"
+                                    )}
+                                </p>
                             </div>
                         </div>
                         <div className="form-group row  ">
