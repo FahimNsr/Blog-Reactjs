@@ -35,13 +35,12 @@ export const getEditPost = (postId) => {
 export const updatePostProcess = (postId, updatedPost) => {
     return async (dispatch, getState) => {
         const posts = [...getState().dashPosts];
-        const filteredPosts = posts.filter((post) => (post._id = postId));
 
         try {
             const { data, status } = await updatePost(postId, updatedPost);
             await dispatch({
                 type: "UPDATE_POST",
-                payload: [...filteredPosts, data.post],
+                payload: [data.upPost],
             });
 
             if (status === 200) {
@@ -56,10 +55,21 @@ export const updatePostProcess = (postId, updatedPost) => {
 export const handleDelete = (postId) => {
     return async (dispatch, getState) => {
         const posts = [...getState().dashPosts];
-        const filteredPosts = posts.filter((post) => (post._id = postId));
+        console.log(posts);
+        const filteredPosts = posts.filter((post) => post._id !== postId);
+        console.log(filteredPosts);
 
-        await dispatch({ type: "DEL_POST", payload: [...filteredPosts] });
-        const { status } = await delPost(postId);
-        if (status === 200) toast.success("Post deleted successfully");
+        try {
+            await dispatch({
+                type: "DEL_POST",
+                payload: [...filteredPosts],
+            });
+            const { status } = await delPost(postId);
+            if (status === 200) toast.success("Post deleted successfully");
+            console.log(filteredPosts);
+        } catch (ex) {
+            await dispatch({ type: "DEL_POST", payload: [...posts] });
+            console.log(ex);
+        }
     };
 };

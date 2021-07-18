@@ -32,14 +32,14 @@ const AddPost = ({ history }) => {
 
                 dispatch(addPost(data));
 
-                history.push("/dashboard");
+                history.push("/dashboard/posts");
             } else {
                 validator.current.showMessages();
                 forceUpdate(1);
             }
         } catch (ex) {
             toast.error("Something went wrong");
-            console.log(ex)
+            console.log(ex);
         }
     };
     return (

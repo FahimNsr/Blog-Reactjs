@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router";
 import { useDispatch } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
@@ -15,13 +15,16 @@ const UserContext = ({ children, history }) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const resetStates = () => {
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-    };
     const [, forceUpdate] = useState();
 
+    useEffect(() => {
+        return () => {
+            setEmail();
+            setPassword();
+            setConfirmPassword();
+            forceUpdate();
+        };
+    }, []);
     const validator = useRef(new SimpleReactValidator());
 
     const dispatch = useDispatch();
@@ -32,11 +35,11 @@ const UserContext = ({ children, history }) => {
 
         try {
             if (validator.current.allValid()) {
-                dispatch(showLoading())
+                dispatch(showLoading());
                 const { status } = await registerUser(user);
                 if (status === 201) {
                     toast.success("Registration was seccessful");
-                    dispatch(hideLoading())
+                    dispatch(hideLoading());
                     history.push("/login");
                 }
             } else {
@@ -45,7 +48,7 @@ const UserContext = ({ children, history }) => {
             }
         } catch (ex) {
             toast.error("Please check the entered data");
-            dispatch(hideLoading())
+            dispatch(hideLoading());
 
             console.log(ex);
         }
@@ -57,7 +60,7 @@ const UserContext = ({ children, history }) => {
 
         try {
             if (validator.current.allValid()) {
-                dispatch(showLoading())
+                dispatch(showLoading());
                 const { status, data } = await loginUser(user);
                 if (status === 200) {
                     toast.success("Login was seccessful");
@@ -68,9 +71,8 @@ const UserContext = ({ children, history }) => {
                                 .user
                         )
                     );
-                    dispatch(hideLoading())
+                    dispatch(hideLoading());
                     history.replace("/");
-                    resetStates();
                 }
             } else {
                 validator.current.showMessages();
@@ -78,7 +80,7 @@ const UserContext = ({ children, history }) => {
             }
         } catch (ex) {
             toast.error("Please check the entered data");
-            dispatch(hideLoading())
+            dispatch(hideLoading());
             console.log(ex);
         }
     };

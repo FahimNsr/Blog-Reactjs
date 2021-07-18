@@ -56,6 +56,8 @@ const EditPost = ({ match, history }) => {
 
                 dispatch(updatePostProcess(postId, data));
                 history.push("/dashboard/posts");
+                history.push("/dashboard/");
+                history.push("/dashboard/posts");
             } else {
                 validator.current.showMessages();
                 forceUpdate(1);

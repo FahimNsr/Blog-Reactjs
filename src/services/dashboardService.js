@@ -14,8 +14,8 @@ export const editPost = (postId) => {
     return http.get(`${localapi}/api/dashboard/edit-post/${postId}`);
 };
 
-export const updatePost = (postId, post) => {
-    return http.put(`${localapi}/api/dashboard/edit-post/${postId}`, post);
+export const updatePost = (postId, upPost) => {
+    return http.put(`${localapi}/api/dashboard/edit-post/${postId}`, upPost);
 };
 
 export const delPost = (postId) => {
