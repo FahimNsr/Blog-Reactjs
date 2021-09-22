@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import { toast } from "react-toastify";
 
-import { getEditPost, updatePostProcess } from "../../actions/dashboard";
+import { getEditPost, updatePostProcess } from "../../redux/actions/dashboard";
 
 const EditPost = ({ match, history }) => {
     const post = useSelector((state) => state.editPost);

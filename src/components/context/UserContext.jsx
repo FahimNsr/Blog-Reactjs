@@ -8,7 +8,7 @@ import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 import { context } from "./context";
 import { registerUser, loginUser } from "../../services/userService";
-import { addUser } from "./../../actions/user";
+import { addUser } from "./../../redux/actions/user";
 
 const UserContext = ({ children, history }) => {
     const [email, setEmail] = useState("");

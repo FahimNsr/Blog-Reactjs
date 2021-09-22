@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getDashPosts, handleDelete } from "../../actions/dashboard";
+import { getDashPosts, handleDelete } from "../../redux/actions/dashboard";
 
 const DashboardPosts = () => {
     const posts = useSelector((state) => state.dashPosts);
@@ -13,7 +13,7 @@ const DashboardPosts = () => {
     useEffect(() => {
         dispatch(getDashPosts());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [posts]);
 
     return (
         <div className="row">

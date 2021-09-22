@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getSinglePost } from "../../actions/singlePost";
+import { getSinglePost } from "../../redux/actions/singlePost";
 
 const SinglePost = ({ match }) => {
     const post = useSelector((state) => state.singlePost);

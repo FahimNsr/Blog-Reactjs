@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import jwt from "jsonwebtoken";
 import { isEmpty } from "lodash";
 
-import { addUser } from "./actions/user";
-import { clearUser } from "./actions/user";
+import { addUser } from "./redux/actions/user";
+import { clearUser } from "./redux/actions/user";
 
 import MainLayout from "./components/layouts/MainLayout";
 import Error404 from "./components/common/Error404";
@@ -52,29 +52,11 @@ const App = () => {
                         <Route
                             path="/dashboard"
                             exact
-                            render={() =>
-                                !isEmpty(user) && user.admin ? (
-                                    <Dashboard />
-                                ) : (
-                                    <Redirect to="/" />
-                                )
-                            }
+                            render={() => (!isEmpty(user) && user.admin ? <Dashboard /> : <Redirect to="/" />)}
                         />
-                        <Route
-                            path="/dashboard/posts"
-                            exact
-                            component={DashboardPosts}
-                        />
-                        <Route
-                            path="/dashboard/add-post"
-                            exact
-                            component={AddPost}
-                        />
-                        <Route
-                            path="/dashboard/edit-post/:id"
-                            exact
-                            component={EditPost}
-                        />
+                        <Route path="/dashboard/posts" exact component={DashboardPosts} />
+                        <Route path="/dashboard/add-post" exact component={AddPost} />
+                        <Route path="/dashboard/edit-post/:id" exact component={EditPost} />
                     </DashboardLayout>
                 </Route>
                 <Route path={["/"]}>
@@ -104,16 +86,7 @@ const App = () => {
                                     )
                                 }
                             />
-                            <Route
-                                path="/logout"
-                                render={() =>
-                                    isEmpty(user) ? (
-                                        <Redirect to="/" />
-                                    ) : (
-                                        <Logout />
-                                    )
-                                }
-                            />
+                            <Route path="/logout" render={() => (isEmpty(user) ? <Redirect to="/" /> : <Logout />)} />
                             <Route path="/posts/:id" component={SinglePost} />
                             <Route path="/posts" exact component={Posts} />
                             <Route path="/contact" component={Contact} />

@@ -1,17 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { homePosts } from "./../../actions/home.js";
 
 const Home = () => {
-    const posts = useSelector((state) => state.home);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(homePosts());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <div>
@@ -30,7 +20,7 @@ const Home = () => {
                                                 SPRING - SUMMER 2021
                                             </span>
                                             <h2 className="title ">
-                                                New Arrivals
+                                                New Trends
                                             </h2>
                                             <p className="wow fadeInDown">
                                                 Stock up on sportswear and
@@ -57,10 +47,10 @@ const Home = () => {
                                         <div className="hover">
                                             <div className="inner-wrapper">
                                                 <h2 className="title ">
-                                                    - 50%
+                                                     2021
                                                 </h2>
                                                 <span className="subtitle  wow fadeInDown">
-                                                    BACK IN STOCK
+                                                    Winter
                                                 </span>
                                             </div>
                                         </div>
@@ -71,40 +61,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <section className="blog-page-content-area bg-transparent ">
-                <div className="container">
-                    <div className="row">
-                        {posts.map((post) => (
-                            <div key={post._id} className="col-lg-4 col-md-6">
-                                <div className="single-our-story-item">
-                                    <div className="thumb">
-                                        <Link to={`/posts/${post._id}`}>
-                                            <img
-                                                src={`http://localhost:4000/uploads/thumbnails/${post.thumbnail}`}
-                                                alt="our story"
-                                            />
-                                        </Link>
-                                    </div>
-                                    <div className="conent">
-                                        <span className="time">
-                                            {post.createdAt
-                                                .toString()
-                                                .substr(0, 10)}
-                                        </span>
-                                        <Link to={`/posts/${post._id}`}>
-                                            <h4 className="title">
-                                                {post.title}
-                                            </h4>
-                                        </Link>
-                                        <p>{post.body.substring(0, 128)}...</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             <div className="promotional-area-five">
                 <div className="container-fluid">
                     <div className="row">
@@ -122,14 +78,6 @@ const Home = () => {
                                                     <h2 className="title">
                                                         50
                                                     </h2>
-                                                </div>
-                                                <div className="right">
-                                                    <span className="top">
-                                                        %
-                                                    </span>
-                                                    <span className="bottom">
-                                                        Off
-                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="bottom-content wow fadeInDown">
@@ -156,14 +104,6 @@ const Home = () => {
                                                     <h2 className="title">
                                                         70
                                                     </h2>
-                                                </div>
-                                                <div className="right">
-                                                    <span className="top">
-                                                        %
-                                                    </span>
-                                                    <span className="bottom">
-                                                        Off
-                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="bottom-content wow fadeInDown">

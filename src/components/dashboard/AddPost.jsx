@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import SimpleReactValidator from "simple-react-validator";
 import { toast } from "react-toastify";
 
-import { addPost } from "../../actions/dashboard";
+import { addPost } from "../../redux/actions/dashboard";
 
 const AddPost = ({ history }) => {
     const [title, setTitle] = useState();
@@ -29,9 +29,8 @@ const AddPost = ({ history }) => {
                 data.append("status", status);
                 data.append("thumbnail", event.target.thumbnail.files[0]);
                 data.append("body", body);
-
                 dispatch(addPost(data));
-
+                console.log(data)
                 history.push("/dashboard/posts");
             } else {
                 validator.current.showMessages();

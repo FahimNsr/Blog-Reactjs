@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 
-import { clearUser } from "../../actions/user";
+import { clearUser } from "../../redux/actions/user";
 
 const Logout = ({ history }) => {
     const dispatch = useDispatch();

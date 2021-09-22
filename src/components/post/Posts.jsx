@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllPosts } from "./../../actions/posts.js";
+import { getAllPosts } from "./../../redux/actions/posts";
 
 const Post = () => {
     const posts = useSelector((state) => state.posts);
@@ -10,8 +10,7 @@ const Post = () => {
 
     useEffect(() => {
         dispatch(getAllPosts());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    });
 
     return (
         <div>
